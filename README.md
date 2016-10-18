@@ -1,6 +1,6 @@
-﻿nopCommerce PayPal Express plugin
- Updated to use In-Context Checkout option
+nopCommerce PayPal Express plugin 
 ===========
+Updated to use the new In-Context PayPal Express Checkout window
 
 nopCommerce site: [http://www.nopcommerce.com](http://www.nopcommerce.com)
 
