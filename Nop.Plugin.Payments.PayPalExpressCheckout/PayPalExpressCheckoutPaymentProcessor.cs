@@ -252,7 +252,9 @@ namespace Nop.Plugin.Payments.PayPalExpressCheckout
         public override void Install()
         {
             // Setting properties
-            this.AddOrUpdatePluginLocaleResource("Plugins.Payments.PayPalExpressCheckout.Fields.ApiSignature", "API Signature");
+            this.AddOrUpdatePluginLocaleResource("Plugins.Payments.PayPalExpressCheckout.Fields.MerchantId", "Paypal MerchantId");
+            this.AddOrUpdatePluginLocaleResource("Plugins.Payments.PayPalExpressCheckout.Fields.MerchantId.Hint", "The Paypal MerchantId specified in your PayPal account");
+            this.AddOrUpdatePluginLocaleResource("Plugins.Payments.PayPalExpressCheckout.Fields.ApiSignature", "API Signature");            
             this.AddOrUpdatePluginLocaleResource("Plugins.Payments.PayPalExpressCheckout.Fields.ApiSignature.Hint", "The API Signature specified in your PayPal account");
             this.AddOrUpdatePluginLocaleResource("Plugins.Payments.PayPalExpressCheckout.Fields.Username", "Username");
             this.AddOrUpdatePluginLocaleResource("Plugins.Payments.PayPalExpressCheckout.Fields.Username.Hint", "The API Username specified in your PayPal account (this is not your PayPal account email)");
@@ -290,6 +292,8 @@ namespace Nop.Plugin.Payments.PayPalExpressCheckout
             _settingService.DeleteSetting<PayPalExpressCheckoutPaymentSettings>();
 
             // Setting properties
+            this.DeletePluginLocaleResource("Plugins.Payments.PayPalExpressCheckout.Fields.MerchantId");
+            this.DeletePluginLocaleResource("Plugins.Payments.PayPalExpressCheckout.Fields.MerchantId.Hint");
             this.DeletePluginLocaleResource("Plugins.Payments.PayPalExpressCheckout.Fields.ApiSignature");
             this.DeletePluginLocaleResource("Plugins.Payments.PayPalExpressCheckout.Fields.ApiSignature.Hint");
             this.DeletePluginLocaleResource("Plugins.Payments.PayPalExpressCheckout.Fields.Username");

@@ -4,6 +4,7 @@ namespace Nop.Plugin.Payments.PayPalExpressCheckout.Models
 {
     public class PaymentInfoModel : BaseNopModel
     {
-        public string ButtonImageLocation { get; set; }
+        public string MerchantId { get; set; }
+        public bool IsLive { get; set; }
     }
 }

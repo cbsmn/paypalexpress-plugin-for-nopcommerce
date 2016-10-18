@@ -20,6 +20,15 @@
         </tr>
         <tr class="have-business-account">
             <td class="adminTitle">
+                @Html.NopLabelFor(model => model.MerchantId):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.MerchantId)
+                @Html.ValidationMessageFor(model => model.MerchantId)
+            </td>
+        </tr>
+        <tr class="have-business-account">
+            <td class="adminTitle">
                 @Html.NopLabelFor(model => model.ApiSignature):
             </td>
             <td class="adminData">

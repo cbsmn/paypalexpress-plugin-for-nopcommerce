@@ -8,6 +8,8 @@ namespace Nop.Plugin.Payments.PayPalExpressCheckout.Models
 {
     public class ConfigurationModel : BaseNopModel
     {
+        [NopResourceDisplayName("Plugins.Payments.PayPalExpressCheckout.Fields.MerchantId")]
+        public string MerchantId { get; set; }
         [NopResourceDisplayName("Plugins.Payments.PayPalExpressCheckout.Fields.ApiSignature")]
         public string ApiSignature { get; set; }
         [NopResourceDisplayName("Plugins.Payments.PayPalExpressCheckout.Fields.Username")]

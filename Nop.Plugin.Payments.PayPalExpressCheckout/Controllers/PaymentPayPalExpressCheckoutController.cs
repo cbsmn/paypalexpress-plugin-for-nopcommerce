@@ -66,6 +66,7 @@ namespace Nop.Plugin.Payments.PayPalExpressCheckout.Controllers
         {
             var model = new ConfigurationModel
                             {
+                                MerchantId = _payPalExpressCheckoutPaymentSettings.MerchantId,
                                 ApiSignature = _payPalExpressCheckoutPaymentSettings.ApiSignature,
                                 LogoImageURL = _payPalExpressCheckoutPaymentSettings.LogoImageURL,
                                 CartBorderColor = _payPalExpressCheckoutPaymentSettings.CartBorderColor,
@@ -97,6 +98,7 @@ namespace Nop.Plugin.Payments.PayPalExpressCheckout.Controllers
             var validationErrors = new List<string>();
             if (IsLogoImageValid(model.LogoImageURL, out validationErrors))
             {
+                _payPalExpressCheckoutPaymentSettings.MerchantId = model.MerchantId;
                 _payPalExpressCheckoutPaymentSettings.ApiSignature = model.ApiSignature;
                 _payPalExpressCheckoutPaymentSettings.LogoImageURL = model.LogoImageURL;
                 _payPalExpressCheckoutPaymentSettings.CartBorderColor = model.CartBorderColor;
@@ -175,17 +177,24 @@ namespace Nop.Plugin.Payments.PayPalExpressCheckout.Controllers
                 return Content("");
 
             var model = new PaymentInfoModel()
-            {
-                ButtonImageLocation = "https://www.paypalobjects.com/en_GB/i/btn/btn_xpressCheckout.gif",
+            {               
+                MerchantId = _payPalExpressCheckoutPaymentSettings.MerchantId,
+                IsLive = _payPalExpressCheckoutPaymentSettings.IsLive
             };
             return View("~/Plugins/Payments.PayPalExpressCheckout/Views/PaymentPayPalExpressCheckout/PaymentInfo.cshtml", model);
         }
 
-        public RedirectResult SubmitButton()
+        public ActionResult SubmitButton()
         {
             var cart = _payPalExpressCheckoutService.GetCart();
-
-            return Redirect(_payPalRedirectionService.ProcessSubmitButton(cart, TempData));
+            if (HttpContext.Request.IsAjaxRequest()) // Express In-Context Checkout
+            {
+                return Content(_payPalRedirectionService.ProcessSubmitButton(cart, TempData));
+            }
+            else // Express Redirect Checkout
+            {
+                return Redirect(_payPalRedirectionService.ProcessSubmitButton(cart, TempData));
+            }
         }
 
         public ActionResult Return(string token)

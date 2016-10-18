@@ -5,6 +5,7 @@ namespace Nop.Plugin.Payments.PayPalExpressCheckout
 {
     public class PayPalExpressCheckoutPaymentSettings : ISettings
     {
+        public string MerchantId { get; set; }
         public string ApiSignature { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }

@@ -1,15 +1,34 @@
-﻿@{ var error = TempData["paypal-ec-error"]; }
+﻿@model Nop.Plugin.Payments.PayPalExpressCheckout.Models.PaymentInfoModel
+@{ var error = TempData["paypal-ec-error"]; }
 
-<img id="payPalExpressCheckoutImage" alt="" src="https://www.paypalobjects.com/en_GB/i/btn/btn_xpressCheckout.gif" style="cursor:pointer;" />
+<div id="paypal-checkout-container" data-href=""></div>
 
 @if (error != null)
 {
     <p class="error">@error</p>
 }
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('#payPalExpressCheckoutImage').click(function () {
-            setLocation('@Url.RouteUrl("Plugin.Payments.PayPalExpressCheckout.SubmitButton")');
-        });
-    });
+
+<script>
+   window.paypalCheckoutReady = function () {
+       paypal.checkout.setup('@Model.MerchantId', {
+         environment: '@(Model.IsLive ? "production" : "sandbox")',
+         container: 'paypal-checkout-container',
+         click: function (e) {
+			e.preventDefault();
+			e.stopPropagation();
+            paypal.checkout.initXO();
+
+             var action = $.post('@Url.RouteUrl("Plugin.Payments.PayPalExpressCheckout.SubmitButton")');
+
+             action.done(function (data) {
+                 paypal.checkout.startFlow(data);
+             });
+
+             action.fail(function () {
+                 paypal.checkout.closeFlow();
+             });
+         }
+       });
+  };
 </script>
+<script src="https://www.paypalobjects.com/api/checkout.js" async></script>
